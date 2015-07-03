@@ -1,0 +1,64 @@
+apply plugin: 'groovy'
+apply plugin: 'idea'
+//apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
+    }
+    dependencies {
+        classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.1.1'
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "org.twitter4j:twitter4j-core:$twitter4jVersion"
+    compile "org.twitter4j:twitter4j-stream:$twitter4jVersion"
+    compile "org.twitter4j:twitter4j-media-support:$twitter4jVersion"
+    compile "org.twitter4j:twitter4j-async:$twitter4jVersion"
+    compile "org.facebook4j:facebook4j-core:$facebook4jVersion"
+    compile "org.mongodb:mongo-java-driver:$mongoVersion"
+    compile "cc.mallet:mallet:$malletVersion"
+
+    testCompile "junit:junit-dep:$jUnitVersion"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+mainClassName = 'twitter.TwitterMain'
+
+//shadowJar {
+//    mergeServiceFiles()
+//    exclude 'META-INF/*.DSA'
+//    exclude 'META-INF/*.RSA'
+//}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'twitter.TwitterMain'
+    }
+}
+
+//task run(type: JavaExec) {
+//    description 'Runs the application with default parameters'
+//    main = 'twitter.TwitterMain'
+////    args = [ "server", "application.yaml" ]
+//    classpath = sourceSets.main.runtimeClasspath
+//}
+
+run {
+    main = 'twitter.TwitterMain'
+}
+
+defaultTasks "clean", "build", "shadowJar"
