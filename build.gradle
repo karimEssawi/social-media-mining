@@ -1,6 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'idea'
-//apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'application'
 
 buildscript {
@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.1.1'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.1'
     }
 }
 
@@ -38,11 +38,11 @@ task wrapper(type: Wrapper) {
 
 mainClassName = 'twitter.TwitterMain'
 
-//shadowJar {
-//    mergeServiceFiles()
-//    exclude 'META-INF/*.DSA'
-//    exclude 'META-INF/*.RSA'
-//}
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+}
 
 jar {
     manifest {
